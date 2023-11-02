@@ -9,6 +9,17 @@
     </h2>
 
     <div>
+        <form action="/accounts/hello_world/" method="post">
+            {% csrf_token %}
+            <input type="text" name="email">
+            <button type="submit">
+            Register
+            </button>
+        </form>
+
+    </div>
+
+    <div>
         {{temp}}
     </div>
 </div>
