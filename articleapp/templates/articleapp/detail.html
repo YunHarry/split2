@@ -10,32 +10,62 @@
         <h1>
             {{ target_article.title }}
         </h1>
-    </div>
-    <div style="max-width: 900px; margin: auto">
-
-        <div>
-            <img src="{{ target_article.image.url }}" alt=""
-            style="max-width: 900px; margin: auto">
-        </div>
-
-        <div>
-            {{ target_article.content }}
-        </div>
-
+        <p>
+            {{ target_article.created_at }}
+        </p>
     </div>
 
-    {% if user == target_article.writer %}
     <div>
-        <a href="{% url 'articleapp:update' pk=target_article.pk %}"
-               class="btn btn-primary rounded-pill px-5 my-5">
-            Update
-        </a>
-        <a href="{% url 'articleapp:delete' pk=target_article.pk %}"
-            class="btn btn-danger rounded-pill px-5 my-5">
-                Delete
-        </a>
+        <span style="color: #F77"
+              class="material-symbols-outlined">
+            Likes:
+        </span>
+        <span style="verticle-align: top;">
+            {{ target_article.like }}
+        </span>
     </div>
-    {% endif %}
+
+    <div class="my-5">
+        {% if target_article.writer %}
+        <a href="{% url 'accountapp:detail' pk=target_article.writer.pk %}">
+            <img style="width: 2.5rem; height: 2.5rem; object-fit: cover;
+                            border-radius: 50%;"
+                 src="{{ target_article.writer.profile.image.url }}" alt="">
+            <span class="mx-2">
+                    {{ target_article.writer.profile.nickname }}
+            </span>
+        </a>
+        {% else %}
+        <h6>
+            Unkown
+        </h6>
+        {% endif %}
+    </div>
+
+        <hr class="my-5">
+
+    <div style="max-width: 900px; margin: auto">
+        <div>
+            <img style="width: 30%; border-radius: 3rem;"
+                 src="{{ target_article.image.url }}" alt="">
+        </div>
+
+        <div class="my-5">
+            {{ target_article.content|linebreaks }}
+        </div>
+        {% if user == target_article.writer %}
+        <div>
+            <a href="{% url 'articleapp:update' pk=target_article.pk %}"
+               class="btn btn-primary rounded-pill px-5 my-5">
+                Update
+            </a>
+            <a href="{% url 'articleapp:delete' pk=target_article.pk %}"
+               class="btn btn-danger rounded-pill px-5 my-5">
+                Delete
+            </a>
+        </div>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}
